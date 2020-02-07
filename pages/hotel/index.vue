@@ -1,6 +1,6 @@
 <template>
   <div>
-    首页
+      机票模块首页文件
   </div>
 </template>
 
