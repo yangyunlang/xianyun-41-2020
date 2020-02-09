@@ -42,19 +42,30 @@ export default {
   methods: {
     // 提交登录
     handleLoginSubmit () {
-      //   console.log(this.form)
       // 验证表单
-      //el-form 都有一个validate的方法用于验证
       this.$refs['form'].validate((valid) => {
-        //为true表示没有错误
+        // 为true表示没有错误
         if (valid) {
-          //提交到登录接口
-          this.$axios({
-            url: "/accounts/login",
-            method: "POST",
-            data: this.form
-          }).then(res => {
-            console.log(res)
+          // 删除代码
+          // this.$axios({
+          //     url: "/accounts/login",
+          //     method: "POST",
+          //     data: this.form
+          // }).then(res => {
+          //     console.log(res.data);
+          // })
+
+          // 新增代码
+          this.$store.dispatch("user/login", this.form).then(res => {
+            // 成功提示
+            this.$message({
+              message: "登录成功，正在跳转",
+              type: "success"
+            });
+            // 跳转到首页
+            setTimeout(() => {
+              this.$router.replace("/")
+            }, 1000);
           })
         }
       })
