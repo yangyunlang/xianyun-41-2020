@@ -34,7 +34,7 @@ import RegisterForm from "@/components/user/RegisterForm.vue"
 export default {
     data(){
         return {
-            currentTab: 1
+            currentTab: 0
         }
     },
     components:{

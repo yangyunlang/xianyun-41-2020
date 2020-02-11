@@ -37,6 +37,21 @@ export const actions = {
     });
   },
 
+  // 注册方法
+  register(store, data) {
+    // 调用注册的接口
+    return this.$axios({
+      url: "/accounts/register",
+      method: "POST",
+      data
+    }).then(res => {
+      // data是要保存到userInfo
+      const { data } = res;
+      // 调用commit保存数据到state
+      store.commit("setUserInfo", data);
+    });
+  },
+
   // 发送手机验证码, data是手机号码字符串
   sendCaptcha(store, data) {
     return this.$axios({
