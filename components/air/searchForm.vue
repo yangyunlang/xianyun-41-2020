@@ -21,6 +21,7 @@
           :fetch-suggestions="queryDepartSearch"
           placeholder="请搜索出发城市"
           @select="handleDepartSelect"
+          @blur="handleDepartBlur"
           class="el-autocomplete"
           v-model="form.departCity"
         ></el-autocomplete>
@@ -65,6 +66,9 @@ export default {
         destCode: "",     //到达城市代码
         departDate: ""    //日期字符串
       },
+
+      //出发城市列表
+      departData:[]
     }
   },
   methods: {
@@ -101,10 +105,22 @@ export default {
           return v;
         })
 
+        //把newData保存带data中
+        this.departData = newData;
 
         //cd把数组展示到列表中，数组中每一项必须是对象，对象中必须有value属性
         cb(newData);
       })
+    },
+
+    //出发城市输入框失去焦点时候触发
+    handleDepartBlur(){
+        if(this.departData.lenght === 0){
+            return;
+        }
+        //默认获取数组中第一个城市
+        this.form.departCity =  this.departData[0].value;
+            this.form.departCode =  this.departData[0].sort;
     },
 
     queryDestSearch (value, cd) {
