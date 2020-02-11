@@ -8,19 +8,18 @@ export const state = () => ({
 });
 
 export const mutations = {
-    //保存用户信息的store
+  //保存用户信息的store
   setUserInfo(state, data) {
     state.userInfo = data;
-    },
-    
-    //清除用户数据
-    cleanUserInfo (state, info) {
-        if (process.browser) {
-            localStorage.removeItem("userInfo");
-        }
-        state.userInfo = {};
-    }
+  },
 
+  //清除用户数据
+  cleanUserInfo(state, info) {
+    if (process.browser) {
+      localStorage.removeItem("userInfo");
+    }
+    state.userInfo = {};
+  }
 };
 
 export const actions = {
@@ -35,6 +34,17 @@ export const actions = {
       //保存到state
       commit("setUserInfo", data);
       return data;
+    });
+  },
+
+  // 发送手机验证码, data是手机号码字符串
+  sendCaptcha(store, data) {
+    return this.$axios({
+      url: "/captchas",
+      method: "POST",
+      data: {
+        tel: data // 用户名就是手机号码
+      }
     });
   }
 };
