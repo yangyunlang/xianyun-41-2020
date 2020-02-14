@@ -83,9 +83,9 @@ export default {
       destData: [],
 
       //日期可选配置
-      pickerOptions:{
+      pickerOptions: {
         //如果返回true表示可选
-        disabledDate(time){
+        disabledDate (time) {
           return time.getTime() + 3600 * 1000 * 24 < Date.now();
         },
       }
@@ -138,7 +138,7 @@ export default {
         cb([]);
         return;
       }
-      
+
       //调用封装后的函数
       this.querySearch(value).then(newData => {
         //把newData保存到data中
@@ -149,14 +149,14 @@ export default {
       })
     },
 
-    //出发城市输入框失去焦点时候触发
+    // 出发城市输入框失去焦点时候触发
     handleDepartBlur () {
-      if (this.departData.lenght === 0) {
+      if (this.departData.length === 0) {
         return;
       }
-      //默认获取数组中第一个城市
-      this.form.departCity =  this.departData[0].value;
-      this.form.departCode =  this.departData[0].sort;
+      // 默认获取数组中第一个城市
+      this.form.departCity = this.departData[0].value;
+      this.form.departCode = this.departData[0].sort;
     },
     // 到达城市输入框失去焦点时候触发
     handleDestBlur () {

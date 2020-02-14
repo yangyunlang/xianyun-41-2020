@@ -57,8 +57,7 @@ export default {
       total: 0
     }
   },
-
-    components: {
+  components: {
     FlightsListHead,
     FlightsItem
   },
@@ -68,21 +67,16 @@ export default {
     //计算属性函数内部引用实例(this)的属性一旦发生变化，函数会重新执行返回新的值
     dataList () {
       //判断flightsData有没有值
-      if (!this.flightsData.flights) {
+      if (!this.flightsData.fligths) {
         //没有值返回一个空数组
         return [];
       }
 
       //第一页是0-5，第二页是5-10，第三页是10-15
       const arr = this.flightsData.flights.slice((this.pageIndex - 1) * this.pageSize, this.pageIndex * this.pageSize);
-
-      console.log(arr);
-
       return arr;
     }
   },
-
-
 
   mounted () {
     // 请求机票列表数据
@@ -97,14 +91,14 @@ export default {
     })
   },
 
-  methods: {
+  methods:{
     //切换条数时触发的事件
-    handleSizeChange (index) {
+     handleSizeChange(index){
       this.pageSize = index;
     },
 
     //切换页数时触发的事件
-    handleCurrentChange (index) {
+    handleCurrentChange(index){
       this.pageIndex = index;
     },
   }
