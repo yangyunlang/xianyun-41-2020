@@ -172,7 +172,10 @@ export default {
 
     // 撤销条件时候触发
     handleFiltersCancel () {
-
+        this.airport = "";      //机场
+        this.flightTime = "";   //出发时间
+        this.company = "";      //航空公司
+        this.airSize = "";      //机型大小
     },
   }
 }
