@@ -20,16 +20,20 @@
             </p>
         </div>
 
-        <div class="history">
+         <div class="history">
             <h5>历史查询</h5>
-            <nuxt-link to="#">
+            <!-- 要循环的标签 -->
+            <nuxt-link 
+            :to="`/air/flights?departCity=${item.departCity}&departCode=${item.departCode}&destCity=${item.destCity}&destCode=${item.destCode}&departDate=${item.departDate}`"
+            v-for="(item, index) in $store.state.air.history"
+            :key="index">
                 <el-row type="flex" 
                 justify="space-between" 
                 align="middle"
                 class="history-item">
                     <div class="air-info">
-                        <div class="to-from">广州 - 上海</div>
-                        <p>2019-06-16</p>
+                        <div class="to-from">{{item.departCity}} - {{item.destCity}}</div>
+                        <p>{{item.departDate}}</p>
                     </div>
                     <span>选择</span>
                 </el-row>
@@ -38,17 +42,15 @@
     </div>
 </template>
 
-<script>
+ <script>
 export default {
-
-}
+ }
 </script>
 
-<style scoped lang="less">
+ <style scoped lang="less">
 .statement{
     border:1px #ddd solid;
-
-    .statement-list{
+     .statement-list{
         padding: 10px 0;
         > div{
             text-align: center;
@@ -69,38 +71,31 @@ export default {
         font-size: 14px;
     }
 }
-
-.history{
+ .history{
     border:1px #ddd solid;
     padding:10px;
     margin-top:10px;
-
-    h5{
+     h5{
         font-size: 16px;
         font-weight: normal;
         padding-bottom: 10px;
         border-bottom:1px #eee solid;
     }
-
-    .history-item{
+     .history-item{
         padding:10px 0;
         font-size: 14px;
         border-bottom: 1px #eee solid;
-
-        &:last-child{
+         &:last-child{
             border:none;
         }
-
-        .to-from{
+         .to-from{
             margin-bottom: 5px;
         }
-
-        p{
+         p{
             font-size: 12px;
             color:#666;
         }
-
-        span{
+         span{
             color:#fff;
             display: block;
             padding:2px 10px;
@@ -111,4 +106,4 @@ export default {
         }
     }
 }
-</style>
+</style> 
