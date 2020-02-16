@@ -210,7 +210,17 @@ export default {
       // 如果验证没通过，就直接返回
       if (!valid) return;
       // 调用提交订单的接口
-      // console.log(this.form.insurances)
+      this.$axios({
+        url:"/airorders",
+        method:"POST",
+        data: this.form,
+        headers:{
+          //必须要做token前面加上`Bearer `字符串，后面有一个空格
+          Authorization:`Bearer ` + this.$store.state.user.userInfo.token
+        }
+      }).then(res => {
+        console.log(res);
+      })
     }
   }
 }

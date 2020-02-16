@@ -96,70 +96,71 @@ export default {
   beforeRouteUpdate (to, from, next) {
     // 每次url变化时候把pageIndex初始化为1
     this.pageIndex = 1;
+    //跳转到下一页
+    next();
     // 请求机票列表数据
     this.getList();
-    next();
   },
 
-mounted() {
-  // 请求机票列表数据
-  this.getList();
-},
-
-computed: {
-  //切割之后返回的数组（当前页面要展示的数组）
-  //计算属性函数内部引用实例(this)的属性一旦发生变化，函数会重新执行返回新的值
-  dataList() {
-    //判断flightsData有没有值
-    if (!this.flightsData.flights) {
-      //没有值返回一个空数组
-      return [];
-    }
-
-    //第一页是0-5，第二页是5-10，第三页是10-15
-    const arr = this.flightsData.flights.slice((this.pageIndex - 1) * this.pageSize, this.pageIndex * this.pageSize);
-
-    console.log(arr);
-
-    return arr;
-  }
-},
-
-
-methods: {
-  //请求机票列表接口
-  getList() {
+  mounted () {
     // 请求机票列表数据
-    this.$axios({
-      url: "/airs",
-      params: this.$route.query
-    }).then(res => {
-      // 总数据
-      this.flightsData = res.data;
-      //备份一下数据，注意res.data需要拷贝一份出来
-      this.cacheFlightsData = { ...res.data };
-      //修改总条数
-      this.total = this.flightsData.total;
-    })
+    this.getList();
   },
 
-  //切换条数时触发的事件
-  handleSizeChange(index) {
-    this.pageSize = index;
+  computed: {
+    //切割之后返回的数组（当前页面要展示的数组）
+    //计算属性函数内部引用实例(this)的属性一旦发生变化，函数会重新执行返回新的值
+    dataList () {
+      //判断flightsData有没有值
+      if (!this.flightsData.flights) {
+        //没有值返回一个空数组
+        return [];
+      }
+
+      //第一页是0-5，第二页是5-10，第三页是10-15
+      const arr = this.flightsData.flights.slice((this.pageIndex - 1) * this.pageSize, this.pageIndex * this.pageSize);
+
+      console.log(arr);
+
+      return arr;
+    }
   },
 
-  //切换页数时触发的事件
-  handleCurrentChange(index) {
-    this.pageIndex = index;
-  },
 
-  //获取过滤组件的过滤后的数组（arr就是过滤后的数组）
-  getData(arr) {
-    this.flightsData.flights = arr;
-    //总条数
-    this.totel = arr.length;
+  methods: {
+    //请求机票列表接口
+    getList () {
+      // 请求机票列表数据
+      this.$axios({
+        url: "/airs",
+        params: this.$route.query
+      }).then(res => {
+        // 总数据
+        this.flightsData = res.data;
+        //备份一下数据，注意res.data需要拷贝一份出来
+        this.cacheFlightsData = { ...res.data };
+        //修改总条数
+        this.total = this.flightsData.total;
+      })
+    },
+
+    //切换条数时触发的事件
+    handleSizeChange (index) {
+      this.pageSize = index;
+    },
+
+    //切换页数时触发的事件
+    handleCurrentChange (index) {
+      this.pageIndex = index;
+    },
+
+    //获取过滤组件的过滤后的数组（arr就是过滤后的数组）
+    getData (arr) {
+      this.flightsData.flights = arr;
+      //总条数
+      this.totel = arr.length;
+    }
   }
-}
 }
 </script>
 

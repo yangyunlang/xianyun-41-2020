@@ -7,9 +7,10 @@ export const state = () => {
 
 export const mutations = {
   // 把传入的表单数据存储在history
-    setHistory (state, data) {
-        state.history.push(data);
-        state.history = state.history.slice(state.history.length - 5);
-        
+  setHistory (state, data) {
+    //把新的搜索记录添加到第一位
+    state.history.unshift(data);
+    //截取数组的长度为5
+    state.history.length = 5;
   }
 };

@@ -62,9 +62,11 @@ export default {
               message: "登录成功，正在跳转",
               type: "success"
             });
-            // 跳转到首页
+            // 跳转到首页,如果使用push跳转，路由内存里面会多一条记录
+            //如果是replace替换当前路由
             setTimeout(() => {
-              this.$router.replace("/")
+              //如果this.$route.query.returnUrl没有值，跳转到首页
+              this.$router.replace(this.$route.query.returnUrl || "/")
             }, 1000);
           })
         }
