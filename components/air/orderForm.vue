@@ -66,6 +66,7 @@
         <el-button type="warning" class="submit" @click="handleSubmit">提交订单</el-button>
       </div>
     </div>
+    <span>{{allPrice}}</span>
   </div>
 </template>
 
@@ -92,6 +93,32 @@ export default {
 
       //当前机票的详情信息
       infoData: {}
+    }
+  },
+  computed: {
+    // 总价格，展示在侧边栏组件
+    allPrice () {
+      // 先判断infoData是否有数据
+      if (!this.infoData.seat_infos) {
+        return;
+      }
+      let price = 0;
+      // 单价
+      price += this.infoData.seat_infos.org_settle_price;
+      // 基建燃油费
+      price += this.infoData.airport_tax_audlet;
+      // 保险
+      this.infoData.insurances.forEach(v => {
+        // 如果选中的id数组包含了当前的保险id，需要加上保险的价格 
+        if (this.form.insurances.indexOf(v.id) > -1) {
+          price += v.price;
+        }
+      });
+      // 人数的数量
+      price *= this.form.users.length;
+      // 把总价保存到store
+      this.$store.commit("air/setAllPrice", price)
+      return '';
     }
   },
   mounted () {
@@ -214,12 +241,12 @@ export default {
       if (!valid) return;
       // 调用提交订单的接口
       this.$axios({
-        url:"/airorders",
-        method:"POST",
+        url: "/airorders",
+        method: "POST",
         data: this.form,
-        headers:{
+        headers: {
           //必须要做token前面加上`Bearer `字符串，后面有一个空格
-          Authorization:`Bearer ` + this.$store.state.user.userInfo.token
+          Authorization: `Bearer ` + this.$store.state.user.userInfo.token
         }
       }).then(res => {
         this.$message.success("订单提交成功");
